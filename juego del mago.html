@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mago Dev · La Mazmorra de la Nube</title>
+<style>
+*{box-sizing:border-box;margin:0}
+body{min-height:100vh;font-family:'Segoe UI',system-ui,sans-serif;color:#fff;overflow-x:hidden;background:radial-gradient(circle at 20% 10%,#3b2a7a,#14102b 60%,#0a0818)}
+.cloud{position:fixed;left:-150px;font-size:70px;opacity:.12;animation:fl linear infinite;pointer-events:none;z-index:0}
+@keyframes fl{to{transform:translateX(120vw)}}
+.screen{display:none;max-width:760px;margin:auto;padding:16px;text-align:center;position:relative;z-index:1}
+.screen.on{display:block}
+h1{font-size:3rem;background:linear-gradient(90deg,#7dd3fc,#c4b5fd,#fcd34d);-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{color:#c4b5fd}
+.logo{font-size:5rem;margin-top:20px;animation:bob 2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-12px)}}
+.sub{color:#fcd34d;margin:4px 0 20px;letter-spacing:2px}
+.how{display:grid;gap:10px;margin:16px 0}
+.how div{background:#ffffff14;border:1px solid #ffffff30;border-radius:14px;padding:12px;text-align:left;display:flex;gap:10px;align-items:center}
+.how b{background:#8b5cf6;border-radius:50%;width:28px;height:28px;display:grid;place-items:center;flex:none}
+.how span{font-size:1.6rem}
+button{font:inherit;color:#fff;border:0;border-radius:12px;padding:10px 16px;background:#3b3470;cursor:pointer}
+button:hover{filter:brightness(1.3)}button:active{filter:brightness(.8)}
+.big{font-size:1.6rem;font-weight:800;padding:14px 50px;background:linear-gradient(135deg,#f59e0b,#ef4444);box-shadow:0 0 30px #f59e0b80}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px;background:#ffffff14;border-radius:14px;padding:8px 14px}
+.card{background:#ffffff12;border:1px solid #ffffff25;border-radius:14px;padding:10px 14px;margin:10px 0}
+.concept{color:#7dd3fc;font-size:.9rem;margin-top:4px}
+#board{position:relative;margin:10px auto;border:4px solid #6d5bd0;border-radius:12px;box-shadow:0 0 30px #8b5cf680;overflow:hidden;display:grid}
+.t{width:var(--s);height:var(--s);display:grid;place-items:center;font-size:calc(var(--s)*.6)}
+.wall{background:repeating-linear-gradient(0deg,#3f3a63 0 8px,#2c2848 8px 10px)}
+.f1{background:#26214a}.f2{background:#2e2858}
+.exit{background:radial-gradient(#7dd3fc,#26214a 70%);animation:glow 1.2s infinite alternate}
+@keyframes glow{to{filter:brightness(1.5)}}
+#hero{position:absolute;width:var(--s);height:var(--s);display:grid;place-items:center;font-size:calc(var(--s)*.7);transition:left .3s,top .3s;filter:drop-shadow(0 0 8px #fcd34d);z-index:2;pointer-events:none}
+.shake{animation:sh .4s}
+@keyframes sh{25%{margin-left:-8px}75%{margin-left:8px}}
+#msg{min-height:28px;font-weight:700}
+.bad{color:#ff8a9a}
+.label{margin:12px 0 6px;color:#fcd34d;font-weight:700}
+.pad{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:420px;margin:auto}
+.pad button{font-size:1.8rem;background:linear-gradient(135deg,#6d5bd0,#8b5cf6);box-shadow:0 4px 0 #3b2a7a}
+#prog{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;min-height:64px;padding:10px;background:#0b0a1a;border:2px dashed #6d5bd0;border-radius:14px}
+.ph{color:#8d84b8;align-self:center}
+.chip{display:flex;align-items:center;gap:5px;background:#3b3470;border-radius:12px;padding:6px 8px}
+.chip b{background:#f59e0b;color:#000;border-radius:50%;width:22px;height:22px;display:grid;place-items:center;font-size:.8rem}
+.chip .ic{font-size:1.5rem}
+.chip button{padding:3px 10px;font-size:1.1rem;background:#5b4fb0}
+.chip em{font-style:normal;font-weight:800;min-width:28px}
+.chip .x{background:#c0392b}
+.chip.on{outline:3px solid #fcd34d}
+.btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+.go{background:linear-gradient(135deg,#16a34a,#22c55e);font-weight:800;font-size:1.1rem}
+#modal{position:fixed;inset:0;background:#000b;display:none;place-items:center;z-index:10}
+#modal.on{display:grid}
+.box{background:#1d1a3a;border:2px solid #8b5cf6;border-radius:20px;padding:24px;max-width:90%;text-align:center;box-shadow:0 0 40px #8b5cf6}
+#mStars{font-size:2.5rem;margin:8px 0}
+.cf{position:fixed;top:-30px;font-size:1.8rem;z-index:20;font-style:normal;pointer-events:none;animation:fall 2.2s linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
+</style>
+</head>
+<body>
+<span class="cloud" style="top:8%;animation-duration:38s">☁️</span>
+<span class="cloud" style="top:45%;animation-duration:55s;font-size:100px">☁️</span>
+<span class="cloud" style="top:75%;animation-duration:44s">☁️</span>
+
+<section id="intro" class="screen on">
+  <div class="logo">🧙‍♂️</div>
+  <h1>Mago Dev</h1>
+  <h2>La Mazmorra de la Nube</h2>
+  <p class="sub">El Constructor de Algoritmos</p>
+  <div class="how">
+    <div><b>1</b><span>🧩</span>Arma una lista de pasos con las flechas</div>
+    <div><b>2</b><span>▶️</span>Pulsa Ejecutar y mira al mago obedecer</div>
+    <div><b>3</b><span>☁️</span>Llega al portal, recoge 💎 y esquiva 🔥</div>
+  </div>
+  <button type="button" class="big" data-a="play">¡JUGAR!</button>
+</section>
+
+<section id="game" class="screen">
+  <div class="top"><strong id="lvname"></strong><span id="stat"></span><button type="button" data-a="snd" id="snd">🔊</button></div>
+  <div class="card"><p id="story"></p><p class="concept" id="concept"></p></div>
+  <div id="board"></div>
+  <div id="msg"></div>
+  <div class="label">1) Toca las flechas para agregar pasos</div>
+  <div class="pad">
+    <button type="button" data-a="dir" data-d="U">⬆️</button><button type="button" data-a="dir" data-d="D">⬇️</button>
+    <button type="button" data-a="dir" data-d="L">⬅️</button><button type="button" data-a="dir" data-d="R">➡️</button>
+  </div>
+  <div class="label">2) Tu algoritmo <span id="cnt"></span></div>
+  <div id="prog"></div>
+  <div class="btns">
+    <button type="button" class="go" data-a="run">▶ Ejecutar</button>
+    <button type="button" data-a="reset">↺ Reiniciar</button>
+    <button type="button" data-a="clear">🗑 Borrar todo</button>
+    <button type="button" data-a="hint">💡 Pista</button>
+  </div>
+</section>
+
+<div id="modal"><div class="box">
+  <h2 id="mTitle"></h2><div id="mStars"></div><p id="mText"></p>
+  <div class="btns"><button type="button" data-a="retry">↺ Repetir</button><button type="button" class="go" data-a="next" id="next"></button></div>
+</div></div>
+
+<script>
+const $=s=>document.querySelector(s), sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const MOV={U:[0,-1],D:[0,1],L:[-1,0],R:[1,0]}, ICON={U:'⬆️',D:'⬇️',L:'⬅️',R:'➡️'};
+// #=muro S=inicio E=portal *=gema K=llave D=puerta ^=trampa
+const LEVELS=[
+ {t:'Sala 1 · El Pasillo',story:'Llega al portal ☁️. ¡Toca ➡️ varias veces y mira cómo sube el contador!',
+  concept:'💡 Bucle: repetir una orden es automatizar, como un cron job.',hint:'Toca ➡️ cuatro veces: tendrás un solo paso con ×4.',par:1,max:3,
+  map:['#######','#S..*E#','#######']},
+ {t:'Sala 2 · La Esquina',story:'Recoge las 2 gemas 💎 y llega al portal. Cambia de dirección en las esquinas.',
+  concept:'💡 Secuencia: los pasos se ejecutan en el orden exacto.',hint:'➡️×3, ⬇️×2, ⬅️×3.',par:3,max:4,
+  map:['######','#S..*#','####.#','#E..*#','######']},
+ {t:'Sala 3 · Cuidado con el fuego',story:'🔥 es una trampa: si la pisas, pierdes. Rodéala por abajo.',
+  concept:'💡 Errores: un fallo no controlado tumba todo el servidor.',hint:'⬇️×2, ➡️×3, ⬆️×2, ➡️×1.',par:4,max:5,
+  map:['#######','#S.^.E#','#..#*.#','#.*...#','#######']},
+ {t:'Sala 4 · La Puerta',story:'La puerta 🚪 no abre sin la llave 🗝️. ¡Búscala primero!',
+  concept:'💡 Dependencias: sin credenciales no hay acceso.',hint:'⬇️ (llave), ➡️ (gema), ⬆️, ➡️×2, ⬇️, ⬆️, ➡️.',par:7,max:8,
+  map:['#######','#S.D.E#','#K*#*.#','#######']},
+ {t:'Sala 5 · El Despliegue Final',story:'Esquiva el fuego, toma la llave y abre la puerta del servidor.',
+  concept:'💡 Pipeline: planifica todas las etapas antes de ejecutar.',hint:'⬇️×2, ➡️×3, ⬆️×2, ➡️×3, ⬇️×2.',par:5,max:7,
+  map:['#########','#S.^.*K.#','#.##.##D#','#.*..^.E#','#########']}
+];
+let li=0,lv=LEVELS[0],grid=[],hero={x:0,y:0},hasKey=false,gems=0,prog=[],busy=false,sound=true;
+
+function sfx(f,d=.12,t='square'){if(!sound)return;try{const a=sfx.a||(sfx.a=new AudioContext()),o=a.createOscillator(),g=a.createGain();
+ o.type=t;o.frequency.value=f;g.gain.value=.07;o.connect(g);g.connect(a.destination);o.start();o.stop(a.currentTime+d)}catch(e){}}
+function say(t,c=''){$('#msg').textContent=t;$('#msg').className=c}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id))}
+
+function start(i){li=i;lv=LEVELS[i];prog=[];busy=false;lv.gems=lv.map.join('').split('*').length-1;
+ $('#lvname').textContent=`Nivel ${i+1}/${LEVELS.length} · ${lv.t}`;
+ $('#story').textContent=lv.story;$('#concept').textContent=lv.concept;
+ $('#modal').classList.remove('on');show('game');build();renderProg();say('')}
+
+function build(){
+ grid=lv.map.map(r=>[...r]);gems=0;hasKey=false;
+ grid.forEach((r,y)=>r.forEach((c,x)=>{if(c==='S'){hero={x,y};r[x]='.'}}));
+ const B=$('#board'),w=grid[0].length,s=Math.max(30,Math.min(64,Math.floor((innerWidth-60)/w)));
+ B.style.setProperty('--s',s+'px');B.style.gridTemplateColumns=`repeat(${w},${s}px)`;B.style.width=w*s+8+'px';
+ B.innerHTML='';
+ grid.forEach((r,y)=>r.forEach((c,x)=>{const d=document.createElement('div');d.id=`c${x}_${y}`;B.appendChild(d);draw(x,y)}));
+ const H=document.createElement('div');H.id='hero';H.textContent='🧙‍♂️';B.appendChild(H);place();stat();
+}
+function draw(x,y){const c=grid[y][x],d=$(`#c${x}_${y}`);
+ d.className='t '+(c==='#'?'wall':(x+y)%2?'f1':'f2')+(c==='E'?' exit':'');
+ d.textContent={K:'🗝️',D:'🚪','*':'💎','^':'🔥',E:'☁️'}[c]||''}
+function place(){const H=$('#hero');H.style.left=`calc(var(--s)*${hero.x})`;H.style.top=`calc(var(--s)*${hero.y})`}
+function stat(){$('#stat').textContent=`💎 ${gems}/${lv.gems}   ${hasKey?'🗝️ Llave':''}`}
+
+function addDir(d){
+ if(busy){say('Espera a que termine la ejecución…','bad');return}
+ const last=prog[prog.length-1];
+ if(last&&last.c===d){last.n=Math.min(9,last.n+1)}
+ else if(prog.length>=lv.max){say(`Máximo ${lv.max} pasos. ¡Sube los contadores ×! 😉`,'bad');return}
+ else prog.push({c:d,n:1});
+ say('');sfx(440,.06);renderProg();
+}
+function renderProg(){
+ const P=$('#prog');$('#cnt').textContent=`(${prog.length}/${lv.max} pasos)`;
+ P.innerHTML=prog.length?prog.map((p,i)=>`<div class="chip"><b>${i+1}</b><span class="ic">${ICON[p.c]}</span>
+  <button type="button" data-a="dec" data-i="${i}">−</button><em>×${p.n}</em><button type="button" data-a="inc" data-i="${i}">+</button>
+  <button type="button" class="x" data-a="del" data-i="${i}">✕</button></div>`).join(''):'<span class="ph">Aquí aparecerán tus pasos 👆</span>';
+}
+function mark(i){document.querySelectorAll('.chip').forEach((c,j)=>c.classList.toggle('on',j===i))}
+
+function move(c){
+ const [dx,dy]=MOV[c],x=hero.x+dx,y=hero.y+dy,t=grid[y]&&grid[y][x];
+ if(t===undefined||t==='#')return '🧱 ¡Chocaste con un muro!';
+ if(t==='D'){if(!hasKey)return '🔒 Puerta cerrada: ¡primero busca la llave!';grid[y][x]='.';draw(x,y);sfx(520,.2)}
+ hero={x,y};place();sfx(300,.07);
+ if(t==='^')return '🔥 ¡Pisaste una trampa! Rodéala.';
+ if(t==='K'){hasKey=true;grid[y][x]='.';draw(x,y);sfx(700,.2);stat()}
+ if(t==='*'){gems++;grid[y][x]='.';draw(x,y);sfx(900,.15);stat()}
+ return t==='E'?'win':null}
+
+async function run(){
+ if(busy)return;
+ if(!prog.length){say('Primero agrega pasos con las flechas 👆','bad');return}
+ busy=true;
+ try{
+  build();say('Ejecutando tu algoritmo…');
+  for(let i=0;i<prog.length;i++){
+   mark(i);
+   for(let k=0;k<prog[i].n;k++){
+    await sleep(380);const r=move(prog[i].c);
+    if(r==='win'){mark(-1);busy=false;return win()}
+    if(r){mark(-1);say(r,'bad');$('#hero').classList.add('shake');sfx(110,.35,'sawtooth');return}
+   }}
+  mark(-1);say('El mago no llegó al portal ☁️. ¡Revisa tu algoritmo!','bad');
+ }finally{busy=false}
+}
+
+function win(){
+ const all=gems===lv.gems,eff=prog.length<=lv.par,s=1+(all?1:0)+(eff?1:0),last=li===LEVELS.length-1;
+ sfx(880,.4);confetti();
+ $('#mTitle').textContent=last?'🏆 ¡Eres el Constructor de Algoritmos!':'¡Nivel completado!';
+ $('#mStars').textContent='⭐'.repeat(s)+'☆'.repeat(3-s);
+ $('#mText').innerHTML=['✔ Llegaste al portal',all?'✔ Todas las gemas':`✘ Gemas ${gems}/${lv.gems}`,eff?'✔ Algoritmo eficiente':`✘ Se puede con ${lv.par} pasos o menos`].join('<br>');
+ $('#next').textContent=last?'Volver al inicio':'Siguiente ➜';
+ $('#modal').classList.add('on')}
+function confetti(){for(let i=0;i<40;i++){const e=document.createElement('i');e.className='cf';e.textContent=['⭐','✨','🎉','💎'][i%4];
+ e.style.left=Math.random()*100+'vw';e.style.animationDelay=Math.random()*.6+'s';document.body.appendChild(e);setTimeout(()=>e.remove(),2900)}}
+
+// Un solo manejador de clics para todos los botones
+document.addEventListener('click',e=>{
+ const b=e.target.closest('[data-a]');if(!b)return;
+ const a=b.dataset.a,i=+b.dataset.i;
+ if(a==='play')start(0);
+ else if(a==='dir')addDir(b.dataset.d);
+ else if(a==='run')run();
+ else if(a==='hint')say('💡 '+lv.hint);
+ else if(a==='snd'){sound=!sound;b.textContent=sound?'🔊':'🔇'}
+ else if(a==='retry'){$('#modal').classList.remove('on');build();say('')}
+ else if(a==='next'){$('#modal').classList.remove('on');li<LEVELS.length-1?start(li+1):show('intro')}
+ else if(!busy){
+  if(a==='reset'){build();say('')}
+  else if(a==='clear'){prog=[];renderProg();build();say('')}
+  else if(a==='inc'){prog[i].n=Math.min(9,prog[i].n+1);renderProg()}
+  else if(a==='dec'){prog[i].n=Math.max(1,prog[i].n-1);renderProg()}
+  else if(a==='del'){prog.splice(i,1);renderProg()}
+ }
+});
+addEventListener('keydown',e=>{
+ if(!$('#game').classList.contains('on'))return;
+ const k={ArrowUp:'U',ArrowDown:'D',ArrowLeft:'L',ArrowRight:'R'}[e.key];
+ if(k){e.preventDefault();addDir(k)}
+ else if(e.key==='Enter')run();
+ else if(e.key==='Backspace'&&!busy){prog.pop();renderProg()}});
+</script>
+</body>
+</html>
